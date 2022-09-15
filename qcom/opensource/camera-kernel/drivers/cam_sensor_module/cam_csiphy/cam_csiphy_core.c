@@ -1507,7 +1507,8 @@ void cam_csiphy_shutdown(struct csiphy_device *csiphy_dev)
 		cam_soc_util_disable_platform_resource(soc_info, true, true);
 		if (g_phy_data[soc_info->index].aon_cam_id == NOT_AON_CAM)
 			cam_cpas_stop(csiphy_dev->cpas_handle);
-
+		//deleted by xiaomi
+		//cam_cpas_stop(csiphy_dev->cpas_handle);
 		csiphy_dev->csiphy_state = CAM_CSIPHY_ACQUIRE;
 	}
 
@@ -1523,6 +1524,8 @@ void cam_csiphy_shutdown(struct csiphy_device *csiphy_dev)
 		}
 	}
 
+	//xiaomi: force stop cpas
+	cam_cpas_stop(csiphy_dev->cpas_handle);
 	csiphy_dev->ref_count = 0;
 	csiphy_dev->acquire_count = 0;
 	csiphy_dev->start_dev_count = 0;
