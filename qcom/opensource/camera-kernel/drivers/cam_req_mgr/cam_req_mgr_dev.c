@@ -32,8 +32,10 @@
 #include "cam_compat.h"
 #include "camera_main.h"
 
-#define CAM_REQ_MGR_EVENT_MAX 30
 #define CAM_I3C_MASTER_COMPAT "qcom,geni-i3c"
+
+/* Xiaomi: enlarge from 30 to 120 */
+#define CAM_REQ_MGR_EVENT_MAX 120
 
 static struct cam_req_mgr_device g_dev;
 struct kmem_cache *g_cam_req_mgr_timer_cachep;
