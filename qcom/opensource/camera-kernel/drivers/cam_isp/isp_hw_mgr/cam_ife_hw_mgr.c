@@ -6304,7 +6304,8 @@ static int cam_ife_mgr_config_hw(void *hw_mgr_priv,
 
 	if (cfg->reapply_type && cfg->cdm_reset_before_apply) {
 		if (ctx->last_cdm_done_req < cfg->request_id) {
-			is_cdm_hung = !cam_cdm_detect_hang_error(ctx->cdm_handle);
+			cdm_hang_detect =
+				cam_cdm_detect_hang_error(ctx->cdm_handle, CAM_ISP);
 			CAM_ERR_RATE_LIMIT(CAM_ISP,
 				"CDM callback not received for req: %lld, last_cdm_done_req: %lld, is_cdm_hung: %d",
 				cfg->request_id, ctx->last_cdm_done_req,
@@ -6473,7 +6474,7 @@ static int cam_ife_mgr_config_hw(void *hw_mgr_priv,
 				CAM_ERR(CAM_ISP,
 					"config done completion timeout for req_id=%llu ctx_index %d",
 					cfg->request_id, ctx->ctx_index);
-				rc = cam_cdm_detect_hang_error(ctx->cdm_handle);
+				rc = cam_cdm_detect_hang_error(ctx->cdm_handle, CAM_ISP);
 				if (rc < 0) {
 					cam_cdm_dump_debug_registers(
 						ctx->cdm_handle);
