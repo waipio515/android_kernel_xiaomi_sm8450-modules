@@ -15,6 +15,9 @@
 
 #define CAM_REQ_MGR_MAX_LINKED_DEV     16
 #define MAX_REQ_SLOTS                  48
+#if IS_ENABLED(CONFIG_ISPV3)
+#define CRM_RESULT_QUEUE_SIZE          20
+#endif
 
 /* xiaomi add change wd timer reset to 5000ms from 1000ms*/
 #define CAM_REQ_MGR_WATCHDOG_TIMEOUT          5000
@@ -293,6 +296,7 @@ struct cam_req_mgr_req_tbl {
  * @recovery_counter   : Internal recovery counter
  * @num_sync_links     : Num of sync links
  * @sync_link_hdls     : Array of sync link handles
+ * @internal_applied   : hybrid trigger used
  */
 struct cam_req_mgr_slot {
 	int32_t               idx;
@@ -305,6 +309,9 @@ struct cam_req_mgr_slot {
 	int32_t               recovery_counter;
 	int32_t               num_sync_links;
 	int32_t               sync_link_hdls[MAXIMUM_LINKS_PER_SESSION - 1];
+#if IS_ENABLED(CONFIG_ISPV3)
+	bool                  internal_applied;
+#endif
 };
 
 /**
@@ -323,6 +330,31 @@ struct cam_req_mgr_req_queue {
 	int32_t                     last_applied_idx;
 };
 
+#if IS_ENABLED(CONFIG_ISPV3)
+/**
+ * struct cam_req_mgr_req_data
+ * @in_q             : Poiner to Input request queue
+ * @l_tbl            : unique pd request tables.
+ * @num_tbl          : how many unique pd value devices are present
+ * @applied          : Applied result holding the is_ready result
+ * @apply_data       : Holds information about request id for a request
+ * @prev_apply_data  : Holds information about request id for a previous
+ *                     applied request
+ * @lock             : mutex lock protecting request data ops.
+ */
+struct cam_req_mgr_req_data {
+	struct cam_req_mgr_req_queue *in_q;
+	struct cam_req_mgr_req_tbl   *l_tbl;
+	int32_t                       num_tbl;
+	bool                          applied[CRM_RESULT_QUEUE_SIZE];
+	int32_t                       rd_idx[CRM_RESULT_QUEUE_SIZE];
+	struct cam_req_mgr_apply
+		apply_data[CRM_RESULT_QUEUE_SIZE][CAM_PIPELINE_DELAY_MAX];
+	struct cam_req_mgr_apply
+		prev_apply_data[CRM_RESULT_QUEUE_SIZE][CAM_PIPELINE_DELAY_MAX];
+	struct mutex                  lock;
+};
+#else
 /**
  * struct cam_req_mgr_req_data
  * @in_q             : Poiner to Input request queue
@@ -341,6 +373,7 @@ struct cam_req_mgr_req_data {
 	struct cam_req_mgr_apply      prev_apply_data[CAM_PIPELINE_DELAY_MAX];
 	struct mutex                  lock;
 };
+#endif
 
 /**
  * struct cam_req_mgr_connected_device
@@ -382,6 +415,11 @@ struct cam_req_mgr_debug_data {
  * @workq                : Pointer to handle workq related jobs
  * @pd_mask              : each set bit indicates the device with pd equal to
  *                          bit position is available.
+ * @internal_trigger_mask: each set bit indicates the device which is triggered
+ *                          by internal trigger source
+ * @external_trigger_mask: each set bit indicates the device which is triggered
+ *                          by external trigger source
+ * @hybrid_trigger_source: Indicate whether the link is triggered by hybrid source
  * - List of connected devices
  * @l_dev                : List of connected devices to this link
  * - Request handling data struct
@@ -431,6 +469,8 @@ struct cam_req_mgr_debug_data {
  * @is_shdr              : flag to indicate auto shdr usecase without SFE
  * @wait_for_dual_trigger: Flag to indicate whether to wait for second epoch in dual trigger
  * @debug_data           : Debug data to be dump in case of receovery
+ * @last_internal_applied_idx : Recode the last applied idx by internal trigger
+ * @last_external_applied_idx : Recode the last applied idx by external trigger
  */
 struct cam_req_mgr_core_link {
 	int32_t                              link_hdl;
@@ -441,6 +481,11 @@ struct cam_req_mgr_core_link {
 	enum cam_modeswitch_delay            min_mswitch_delay;
 	struct cam_req_mgr_core_workq       *workq;
 	int32_t                              pd_mask;
+#if IS_ENABLED(CONFIG_ISPV3)
+	int32_t                              internal_trigger_mask;
+	int32_t                              external_trigger_mask;
+	bool                                 hybrid_trigger_source;
+#endif
 	struct cam_req_mgr_connected_device *l_dev;
 	struct cam_req_mgr_req_data          req;
 	struct cam_req_mgr_timer            *watchdog;
@@ -477,6 +522,10 @@ struct cam_req_mgr_core_link {
 	bool                                 is_shdr;
 	bool                                 wait_for_dual_trigger;
 	struct cam_req_mgr_debug_data        debug_data;
+#if IS_ENABLED(CONFIG_ISPV3)
+	int32_t                              last_internal_applied_idx;
+	int32_t                              last_external_applied_idx;
+#endif
 };
 
 /**

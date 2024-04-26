@@ -215,6 +215,9 @@ enum cam_req_mgr_device_id {
 	CAM_REQ_MGR_DEVICE_EXTERNAL_2,
 	CAM_REQ_MGR_DEVICE_EXTERNAL_3,
 	CAM_REQ_MGR_DEVICE_TPG,
+#if IS_ENABLED(CONFIG_ISPV3)
+	CAM_REQ_MGR_DEVICE_ISPV3,
+#endif
 	CAM_REQ_MGR_DEVICE_ID_MAX,
 };
 
@@ -248,6 +251,20 @@ enum cam_req_mgr_link_evt_type {
 	CAM_REQ_MGR_LINK_EVT_MAX,
 };
 
+#if IS_ENABLED(CONFIG_ISPV3)
+/**
+ * enum cam_req_mgr_trigger_source
+ * @CAM_REQ_MGR_TRIG_SRC_INTERNAL : Internal trigger source
+ * @CAM_REQ_MGR_TRIG_SRC_EXTERNAL : External trigger source
+ * @CAM_REQ_MGR_TRIG_SRC_MAX      : Invalid trigger source
+ */
+enum cam_req_mgr_trigger_source {
+	CAM_REQ_MGR_TRIG_SRC_INTERNAL,
+	CAM_REQ_MGR_TRIG_SRC_EXTERNAL,
+	CAM_REQ_MGR_TRIG_SRC_MAX,
+};
+#endif
+
 /**
  * struct cam_req_mgr_trigger_notify
  * @link_hdl : link identifier
@@ -258,6 +275,7 @@ enum cam_req_mgr_link_evt_type {
  * @sof_timestamp_val: Captured time stamp value at sof hw event
  * @req_id   : req id which returned buf_done
  * @trigger_id: ID to differentiate between the trigger devices
+ * @trigger_source : Indicate the trigger source
  */
 struct cam_req_mgr_trigger_notify {
 	int32_t  link_hdl;
@@ -267,6 +285,9 @@ struct cam_req_mgr_trigger_notify {
 	uint64_t sof_timestamp_val;
 	uint64_t req_id;
 	int32_t  trigger_id;
+#if IS_ENABLED(CONFIG_ISPV3)
+	enum cam_req_mgr_trigger_source trigger_source;
+#endif
 };
 
 /**
@@ -345,8 +366,8 @@ struct cam_req_mgr_notify_stop {
  * @trigger : Trigger point for the client
  * @mode_switch_req : Request id on which sensor mode switch observed on the device
  * @trigger_on : This device provides trigger
- * @is_shdr : Flag to indicate auto shdr usecase without SFE
- * @is_shdr_master : Flag to indicate master dev in auto shdr usecase without SFE
+ * @trigger_source  : Indicate the trigger source
+ * @latest_frame_id : Indicate the latest frame id
  */
 struct cam_req_mgr_device_info {
 	int32_t                     dev_hdl;
@@ -357,8 +378,10 @@ struct cam_req_mgr_device_info {
 	uint32_t                    trigger;
 	uint64_t                    mode_switch_req;
 	bool                        trigger_on;
-	bool                        is_shdr;
-	bool                        is_shdr_master;
+#if IS_ENABLED(CONFIG_ISPV3)
+	enum cam_req_mgr_trigger_source trigger_source;
+	int64_t                     latest_frame_id;
+#endif
 };
 
 /**
