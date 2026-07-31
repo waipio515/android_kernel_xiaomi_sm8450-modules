@@ -56,7 +56,7 @@ static DEFINE_MUTEX(g_cali_lock);
 #define AWINIC_CALI_FILE "aw_cali.bin"
 #define AW_INT_DEC_DIGIT 10
 
-static void aw_fs_read(struct file *file, char *buf, size_t count, loff_t *pos)
+static void __maybe_unused aw_fs_read(struct file *file, char *buf, size_t count, loff_t *pos)
 {
 #ifdef AW_KERNEL_VER_OVER_5_4_0
 	kernel_read(file, buf, count, pos);
