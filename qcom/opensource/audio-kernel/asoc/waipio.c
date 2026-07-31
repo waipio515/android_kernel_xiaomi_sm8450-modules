@@ -424,6 +424,22 @@ static int msm_wcn_init(struct snd_soc_pcm_runtime *rtd)
     return ret;
 }
 
+static int msm_wcn_init_btfm(struct snd_soc_pcm_runtime *rtd)
+{
+	unsigned int rx_ch[WCN_CDC_SLIM_RX_CH_MAX] = {157, 158};
+	unsigned int tx_ch[WCN_CDC_SLIM_TX_CH_MAX_FM]  = {159, 160, 161};
+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+	int ret = 0;
+
+	ret = snd_soc_dai_set_channel_map(codec_dai, ARRAY_SIZE(tx_ch),
+					   tx_ch, ARRAY_SIZE(rx_ch), rx_ch);
+	if (ret)
+		return ret;
+
+	msm_common_dai_link_init(rtd);
+	return ret;
+}
+
 static struct snd_info_entry *msm_snd_info_create_subdir(struct module *mod,
 				const char *name,
 				struct snd_info_entry *parent)
