@@ -2652,7 +2652,7 @@ static struct snd_soc_dai_driver cs35l43_dai[] = {
 			.formats = CS35L43_TX_FORMATS,
 		},
 		.ops = &cs35l43_ops,
-		.symmetric_rates = 1,
+		.symmetric_rate = 1,
 	},
 	{
 		.name = "cs35l43-cpu-textlog",
