@@ -1237,7 +1237,8 @@ static int __cam_req_mgr_send_req(struct cam_req_mgr_core_link *link,
 	struct cam_req_mgr_tbl_slot          *slot = NULL;
 	struct cam_req_mgr_apply             *apply_data = NULL;
 #if IS_ENABLED(CONFIG_ISPV3)
-	struct cam_req_mgr_flush_request      flush_req;
+	struct cam_req_mgr_flush_request     flush_req;
+	bool                                 prev_dual_trigger_status = false;
 
 	trigger = trigger_data->trigger;
 	if (link->hybrid_trigger_source) {
