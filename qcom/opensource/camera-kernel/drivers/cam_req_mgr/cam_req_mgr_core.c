@@ -2376,6 +2376,7 @@ static int __cam_req_mgr_process_req(struct cam_req_mgr_core_link *link,
 	struct cam_req_mgr_connected_device *dev = NULL;
 	struct cam_req_mgr_core_link        *tmp_link = NULL;
 	enum crm_req_eof_trigger_type        eof_trigger_type;
+	int32_t               num_sync_links;
 	struct cam_req_mgr_core_link
 		*sync_link[MAXIMUM_LINKS_PER_SESSION - 1];
 
