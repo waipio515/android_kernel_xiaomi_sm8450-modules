@@ -1880,7 +1880,7 @@ static int wcd_mbhc_set_keycode(struct wcd_mbhc *mbhc)
 static int wcd_mbhc_non_usb_c_event_changed(struct notifier_block *nb,
 					    unsigned long evt, void *ptr)
 {
-	struct wcd_mbhc *mbhc = container_of(nb, struct wcd_mbhc, fsa_nb);
+	struct wcd_mbhc *mbhc = container_of(nb, struct wcd_mbhc, aatc_dev_nb);
 	struct ucsi_glink_constat_info *tempptr =
 		(struct ucsi_glink_constat_info *)ptr;
 	enum typec_accessory acc;
@@ -1958,7 +1958,7 @@ static int wcd_mbhc_usbc_ana_event_handler(struct notifier_block *nb,
 #if defined(CONFIG_TARGET_PRODUCT_ZIYI) || defined(CONFIG_TARGET_PRODUCT_YUDI)
 	u8 det_status = 0;
 #endif
-	struct wcd_mbhc *mbhc = container_of(nb, struct wcd_mbhc, fsa_nb);
+	struct wcd_mbhc *mbhc = container_of(nb, struct wcd_mbhc, aatc_dev_nb);
 	struct wcd_mbhc_config *config = mbhc->mbhc_cfg;
 	if (!mbhc)
 		return -EINVAL;
@@ -2072,9 +2072,9 @@ int wcd_mbhc_start(struct wcd_mbhc *mbhc, struct wcd_mbhc_config *mbhc_cfg)
 			goto err;
 		}
 	} else {
-		mbhc->fsa_nb.notifier_call = wcd_mbhc_non_usb_c_event_changed;
-		mbhc->fsa_nb.priority = 0;
-		rc = register_ucsi_glink_notifier(&mbhc->fsa_nb);
+		mbhc->aatc_dev_nb.notifier_call = wcd_mbhc_non_usb_c_event_changed;
+		mbhc->aatc_dev_nb.priority = 0;
+		rc = register_ucsi_glink_notifier(&mbhc->aatc_dev_nb);
 		if (rc) {
 			dev_err(card->dev,
 				"%s: power supply registration failed\n",
