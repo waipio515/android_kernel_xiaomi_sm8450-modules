@@ -2051,6 +2051,7 @@ int wcd_mbhc_start(struct wcd_mbhc *mbhc, struct wcd_mbhc_config *mbhc_cfg)
 
 	/* Parse wcd_usbss/fsa switch handle */
 	if (mbhc_cfg->enable_usbc_analog) {
+#if IS_ENABLED(CONFIG_QCOM_FSA4480_I2C)
 #ifdef CONFIG_AUDIO_UART_DEBUG
 		if (of_find_property(card->dev->of_node,
 				     "qcom,uart-audio-sw-gpio", NULL)) {
@@ -2061,6 +2062,7 @@ int wcd_mbhc_start(struct wcd_mbhc *mbhc, struct wcd_mbhc_config *mbhc_cfg)
 			if (rc)
 				goto err;
 		}
+#endif
 #endif
 		dev_dbg(mbhc->component->dev, "%s: usbc analog enabled\n",
 					__func__);
@@ -2120,8 +2122,10 @@ int wcd_mbhc_start(struct wcd_mbhc *mbhc, struct wcd_mbhc_config *mbhc_cfg)
 		if (mbhc->wcd_aatc_dev_np)
 			rc = wcd_usbss_reg_notifier(&mbhc->aatc_dev_nb, mbhc->wcd_aatc_dev_np);
 #endif
+#if IS_ENABLED(CONFIG_QCOM_FSA4480_I2C)
 		if (mbhc->fsa_aatc_dev_np)
 			rc = fsa4480_reg_notifier(&mbhc->aatc_dev_nb, mbhc->fsa_aatc_dev_np);
+#endif
 	}
 
 	return rc;
@@ -2160,9 +2164,10 @@ void wcd_mbhc_stop(struct wcd_mbhc *mbhc)
 	if (mbhc->mbhc_cfg->enable_usbc_analog && mbhc->wcd_aatc_dev_np)
 		wcd_usbss_unreg_notifier(&mbhc->aatc_dev_nb, mbhc->wcd_aatc_dev_np);
 #endif
+#if IS_ENABLED(CONFIG_QCOM_FSA4480_I2C)
 	if (mbhc->mbhc_cfg->enable_usbc_analog && mbhc->fsa_aatc_dev_np)
 		fsa4480_unreg_notifier(&mbhc->aatc_dev_nb, mbhc->fsa_aatc_dev_np);
-
+#endif
 	pr_debug("%s: leave\n", __func__);
 }
 EXPORT_SYMBOL(wcd_mbhc_stop);

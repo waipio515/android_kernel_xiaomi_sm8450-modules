@@ -571,7 +571,7 @@ static struct snd_soc_dai_link msm_wcn_be_dai_links[] = {
 	},
 };
 
-static struct snd_soc_dai_link msm_wcn_btfm_be_dai_links[] = {
+static struct snd_soc_dai_link __maybe_unused msm_wcn_btfm_be_dai_links[] = {
 	{
 		.name = LPASS_BE_SLIMBUS_7_RX,
 		.stream_name = LPASS_BE_SLIMBUS_7_RX,
