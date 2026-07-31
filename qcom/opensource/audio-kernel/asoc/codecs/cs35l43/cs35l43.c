@@ -34,6 +34,12 @@
 #include <sound/pcm.h>
 #include <sound/pcm_params.h>
 #include <sound/soc.h>
+/* soc-dai.h should be pulled in when including soc.h, 
+   however we got a forward declaration at soc-dai for
+   snd_soc_dai_driver, the full declaration is much later
+   and it'd cause issues while building. so we'd include
+   soc-dai.h manually.*/
+#include <sound/soc-dai.h>
 #include <sound/soc-dapm.h>
 #include <linux/gpio.h>
 #include <sound/initval.h>
