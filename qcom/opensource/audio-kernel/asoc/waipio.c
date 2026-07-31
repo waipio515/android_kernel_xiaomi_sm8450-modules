@@ -554,6 +554,42 @@ static struct snd_soc_dai_link msm_wcn_be_dai_links[] = {
 	},
 };
 
+static struct snd_soc_dai_link msm_wcn_btfm_be_dai_links[] = {
+	{
+		.name = LPASS_BE_SLIMBUS_7_RX,
+		.stream_name = LPASS_BE_SLIMBUS_7_RX,
+		.playback_only = 1,
+		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
+			SND_SOC_DPCM_TRIGGER_POST},
+		.init = &msm_wcn_init_btfm,
+		.ops = &msm_common_be_ops,
+		/* dai link has playback support */
+		.ignore_pmdown_time = 1,
+		.ignore_suspend = 1,
+		SND_SOC_DAILINK_REG(slimbus_7_rx),
+	},
+	{
+		.name = LPASS_BE_SLIMBUS_7_TX,
+		.stream_name = LPASS_BE_SLIMBUS_7_TX,
+		.capture_only = 1,
+		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
+			SND_SOC_DPCM_TRIGGER_POST},
+		.ops = &msm_common_be_ops,
+		.ignore_suspend = 1,
+		SND_SOC_DAILINK_REG(slimbus_7_tx),
+	},
+	{
+		.name = LPASS_BE_SLIMBUS_8_TX,
+		.stream_name = LPASS_BE_SLIMBUS_8_TX,
+		.capture_only = 1,
+		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
+			SND_SOC_DPCM_TRIGGER_POST},
+		.ops = &msm_common_be_ops,
+		.ignore_suspend = 1,
+		SND_SOC_DAILINK_REG(slimbus_8_tx),
+	},
+};
+
 static struct snd_soc_dai_link ext_disp_be_dai_link[] = {
 	/* DISP PORT BACK END DAI Link */
 	{
