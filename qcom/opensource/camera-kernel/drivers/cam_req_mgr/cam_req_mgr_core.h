@@ -520,6 +520,7 @@ struct cam_req_mgr_core_link {
 	uint32_t                             properties_mask;
 	uint32_t                             cont_empty_slots;
 	bool                                 is_shdr;
+	bool                                 is_shdr_master;
 	bool                                 wait_for_dual_trigger;
 	struct cam_req_mgr_debug_data        debug_data;
 #if IS_ENABLED(CONFIG_ISPV3)
