@@ -33,6 +33,7 @@
 #include "codecs/wcd938x/wcd938x-mbhc.h"
 #include "codecs/wsa883x/wsa883x.h"
 #include "codecs/wcd938x/wcd938x.h"
+#include "codecs/wcd937x/wcd937x.h"
 #include "codecs/lpass-cdc/lpass-cdc.h"
 #include <bindings/audio-codec-port-types.h>
 #include "codecs/lpass-cdc/lpass-cdc-wsa-macro.h"
