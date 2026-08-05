@@ -371,7 +371,7 @@ struct data_rate_settings_t data_rate_delta_table_1_2_3 = {
 	.num_data_rate_settings = ARRAY_SIZE(data_rate_settings_1_2_3),
 	.min_supported_datarate = 0,
 	.max_supported_datarate = 0,
-	.data_rate_settings = &data_rate_settings_1_2_3,
+	.data_rate_settings = data_rate_settings_1_2_3,
 };
 
 struct csiphy_reg_parms_t csiphy_v1_2_3 = {
