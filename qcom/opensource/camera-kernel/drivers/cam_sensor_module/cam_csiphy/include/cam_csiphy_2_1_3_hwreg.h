@@ -405,7 +405,7 @@ struct bist_reg_settings_t bist_setting_2_1_3 = {
 	.bist_status_arr = bist_status_arr_2_1_3,
 };
 
-struct data_rate_settings_t data_rate_delta_table_2_1_3 = {
+struct data_rate_settings_waipio_t data_rate_delta_table_2_1_3 = {
 	.num_data_rate_settings = 26,
 	.min_supported_datarate = 0,		/* 0 MSpS */
 	.max_supported_datarate = 13680000000,	/* 6000 MSpS */
@@ -1689,7 +1689,7 @@ struct data_rate_settings_t data_rate_delta_table_2_1_3 = {
 };
 
 /*Add by xiaomi for modify cdr delay reg for l2s*/
-struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l2s = {
+struct data_rate_settings_waipio_t data_rate_delta_table_2_1_3_xiaomi_l2s = {
 	.num_data_rate_settings = 26,
 	.data_rate_settings = {
 		{
@@ -2971,7 +2971,7 @@ struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l2s = {
 };
 
 
-struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l3s = {
+struct data_rate_settings_waipio_t data_rate_delta_table_2_1_3_xiaomi_l3s = {
 	.num_data_rate_settings = 26,
 	.data_rate_settings = {
 		{
@@ -4252,7 +4252,7 @@ struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l3s = {
 	},
 };
 
-struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l1 = {
+struct data_rate_settings_waipio_t data_rate_delta_table_2_1_3_xiaomi_l1 = {
 	.num_data_rate_settings = 26,
 	.data_rate_settings = {
 		{
@@ -5533,7 +5533,7 @@ struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l1 = {
 	},
 };
 
-struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l18 = {
+struct data_rate_settings_waipio_t data_rate_delta_table_2_1_3_xiaomi_l18 = {
 	.num_data_rate_settings = 26,
 	.data_rate_settings = {
 		{
@@ -6814,7 +6814,7 @@ struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_l18 = {
 	},
 };
 
-struct data_rate_settings_t data_rate_delta_table_2_1_3_xiaomi_m11a = {
+struct data_rate_settings_waipio_t data_rate_delta_table_2_1_3_xiaomi_m11a = {
 	.num_data_rate_settings = 26,
 	.data_rate_settings = {
 		{

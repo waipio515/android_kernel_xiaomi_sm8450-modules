@@ -281,6 +281,14 @@ struct data_rate_settings_t {
 	uint64_t max_supported_datarate;
 };
 
+/* Waipio struct - backporting xiaomi changes on 5.10 waipio devices */
+struct data_rate_settings_waipio_t {
+    ssize_t num_data_rate_settings;
+    struct data_rate_reg_info_t data_rate_settings[MAX_DATA_RATES];
+    uint64_t min_supported_datarate;
+    uint64_t max_supported_datarate;
+};
+
 struct bist_reg_settings_t {
 	uint32_t error_status_val_3ph;
 	uint32_t error_status_val_2ph;
