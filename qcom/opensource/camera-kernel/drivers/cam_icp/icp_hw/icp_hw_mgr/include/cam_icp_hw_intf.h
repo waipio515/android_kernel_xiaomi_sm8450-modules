@@ -26,6 +26,7 @@
 #define CAM_ICP_MAX_ICP_DEV_TYPE 2
 
 enum cam_icp_hw_type {
+	CAM_ICP_DEV_A5,
 	CAM_ICP_DEV_ICP_V1,
 	CAM_ICP_DEV_ICP_V2,
 	CAM_ICP_DEV_IPE,

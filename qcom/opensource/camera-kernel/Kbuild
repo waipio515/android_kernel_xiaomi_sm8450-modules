@@ -169,6 +169,9 @@ camera-$(CONFIG_SPECTRA_ICP) += \
 	drivers/cam_icp/icp_hw/ipe_hw/ipe_dev.o \
 	drivers/cam_icp/icp_hw/ipe_hw/ipe_core.o \
 	drivers/cam_icp/icp_hw/ipe_hw/ipe_soc.o \
+	drivers/cam_icp/icp_hw/a5_hw/a5_dev.o \
+	drivers/cam_icp/icp_hw/a5_hw/a5_core.o \
+	drivers/cam_icp/icp_hw/a5_hw/a5_soc.o \
 	drivers/cam_icp/icp_hw/icp_proc/icp_v1_hw/cam_icp_v1_dev.o \
 	drivers/cam_icp/icp_hw/icp_proc/icp_v1_hw/cam_icp_v1_core.o \
 	drivers/cam_icp/icp_hw/icp_proc/icp_v2_hw/cam_icp_v2_dev.o \
