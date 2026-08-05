@@ -1236,9 +1236,9 @@ static int __cam_req_mgr_send_req(struct cam_req_mgr_core_link *link,
 	struct cam_req_mgr_link_evt_data     evt_data;
 	struct cam_req_mgr_tbl_slot          *slot = NULL;
 	struct cam_req_mgr_apply             *apply_data = NULL;
+	bool                                 prev_dual_trigger_status = false;
 #if IS_ENABLED(CONFIG_ISPV3)
 	struct cam_req_mgr_flush_request     flush_req;
-	bool                                 prev_dual_trigger_status = false;
 
 	trigger = trigger_data->trigger;
 	if (link->hybrid_trigger_source) {
@@ -1555,7 +1555,6 @@ static int __cam_req_mgr_send_req(struct cam_req_mgr_core_link *link,
 					break;
 				}
 			}
-
 			if (link->is_shdr && dev->dev_info.is_shdr_master) {
 				prev_dual_trigger_status = link->wait_for_dual_trigger;
 				if (apply_req.dual_trigger_status ==
@@ -2528,11 +2527,11 @@ static int __cam_req_mgr_process_req(struct cam_req_mgr_core_link *link,
 					sync_link[i] = cam_get_link_priv(slot->sync_link_hdls[i]);
 			}
 			rc = __cam_req_mgr_check_multi_sync_link_ready(
+				link, sync_link, slot, num_sync_links, trigger
 #if IS_ENABLED(CONFIG_ISPV3)
-				link, slot, trigger, result_idx);
-#else
-				link, slot, trigger);
+				, result_idx
 #endif
+				);
 		} else {
 			if (link->in_msync_mode) {
 				CAM_DBG(CAM_CRM,

@@ -395,6 +395,8 @@ struct cam_req_mgr_connected_device {
 	struct cam_req_mgr_kmd_ops     *ops;
 	void                           *parent;
 	bool                            is_active;
+	bool 							is_shdr;
+	bool 							is_shdr_master;
 };
 
 struct cam_req_mgr_debug_data {

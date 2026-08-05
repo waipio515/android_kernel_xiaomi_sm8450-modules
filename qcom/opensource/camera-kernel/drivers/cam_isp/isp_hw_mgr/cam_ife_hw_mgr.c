@@ -6253,6 +6253,7 @@ static int cam_ife_mgr_config_hw(void *hw_mgr_priv,
 	struct cam_isp_prepare_hw_update_data *hw_update_data;
 	unsigned long rem_jiffies = 0;
 	bool is_cdm_hung = false;
+	bool cdm_hang_detect = false;
 
 	if (!hw_mgr_priv || !config_hw_args) {
 		CAM_ERR(CAM_ISP,

@@ -14,6 +14,9 @@
 #include "cam_packet_util.h"
 #include "cam_req_mgr_dev.h"
 
+#define CAM_SENSOR_PIPELINE_DELAY_MASK        0xFF
+#define CAM_SENSOR_MODESWITCH_DELAY_SHIFT     8
+
 #if IS_ENABLED(CONFIG_ISPV3)
 #include <linux/ispv3_ioparam.h>
 #endif
@@ -1000,7 +1003,8 @@ int cam_sensor_match_id(struct cam_sensor_ctrl_t *s_ctrl)
 		&(s_ctrl->io_master_info),
 		slave_info->sensor_id_reg_addr,
 		&chipid,s_ctrl->sensor_probe_addr_type,
-		s_ctrl->sensor_probe_data_type);
+		s_ctrl->sensor_probe_data_type,
+		true);
 
 	CAM_DBG(CAM_SENSOR, "%s read id: 0x%x expected id 0x%x:",
 		s_ctrl->sensor_name, chipid, slave_info->sensor_id);

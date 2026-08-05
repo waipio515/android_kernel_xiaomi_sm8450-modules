@@ -45,14 +45,15 @@
 #define CSIPHY_LANE_ENABLE               1
 #define CSIPHY_SETTLE_CNT_LOWER_BYTE     2
 #define CSIPHY_SETTLE_CNT_HIGHER_BYTE    3
-#define CSIPHY_2PH_REGS                  4
-#define CSIPHY_3PH_REGS                  5
-#define CSIPHY_SKEW_CAL                  6
-#define CSIPHY_2PH_COMBO_REGS            7
-#define CSIPHY_3PH_COMBO_REGS            8
-#define CSIPHY_2PH_3PH_COMBO_REGS        9
-#define CSIPHY_AUXILIARY_SETTING         10
-#define CSIPHY_CDR_LN_SETTINGS           11
+#define CSIPHY_DNP_PARAMS                4
+#define CSIPHY_2PH_REGS                  5
+#define CSIPHY_3PH_REGS                  6
+#define CSIPHY_SKEW_CAL                  7
+#define CSIPHY_2PH_COMBO_REGS            8
+#define CSIPHY_3PH_COMBO_REGS            9
+#define CSIPHY_2PH_3PH_COMBO_REGS        10
+#define CSIPHY_AUXILIARY_SETTING         11
+#define CSIPHY_CDR_LN_SETTINGS           12
 
 #define CSIPHY_MAX_INSTANCES_PER_PHY     3
 
@@ -240,6 +241,12 @@ struct csiphy_reg_t {
 
 struct csiphy_device;
 
+struct csiphy_cphy_per_lane_info {
+	uint8_t lane_identifier;
+	struct csiphy_reg_t csiphy_data_rate_regs[MAX_DATA_RATE_REGS];
+};
+
+
 /*
  * struct data_rate_reg_info_t
  * @bandwidth                 : max bandwidth supported by this reg settings
@@ -247,9 +254,15 @@ struct csiphy_device;
  * @data_rate_reg_array       : array of data rate specific reg value pairs
  */
 struct data_rate_reg_info_t {
+	/* xiaomi add for mipi phy backup setting begin*/
+	uint32_t this_setting_max_choice;
+	uint32_t this_setting_current_choice;
+	/* xiaomi add for mipi phy backup setting end*/
 	uint64_t bandwidth;
+	struct csiphy_reg_t *data_rate_reg_array[2];
 	ssize_t  data_rate_reg_array_size;
-	struct csiphy_reg_t *data_rate_reg_array[CAM_CSIPHY_MAX_DATARATE_VARIANTS];
+	struct   csiphy_cphy_per_lane_info per_lane_info[
+			CAM_CSIPHY_MAX_CPHY_LANES];
 };
 
 /**

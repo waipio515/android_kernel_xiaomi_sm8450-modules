@@ -67,6 +67,7 @@
 #define V4L_EVENT_CAM_REQ_MGR_ISPV3_MISN_LSC                            7
 #define V4L_EVENT_CAM_REQ_MGR_ISPV3_TXLM_SOF                            8
 #define V4L_EVENT_CAM_REQ_MGR_POLL_EXIT                                 9
+#define V4L_EVENT_CAM_REQ_MGR_PF_ERROR                                  10
 
 /* SOF Event status */
 #define CAM_REQ_MGR_SOF_EVENT_SUCCESS           0

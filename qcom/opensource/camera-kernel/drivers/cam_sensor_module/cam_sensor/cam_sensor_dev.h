@@ -153,6 +153,7 @@ struct cam_sensor_ctrl_t {
 	bool                           is_stopped_by_user;
 	bool                           stream_off_after_eof;
 	bool                           hw_no_ops;
+	bool                           is_res_info_updated;
 #if IS_ENABLED(CONFIG_ISPV3)
 	enum cam_req_mgr_trigger_source trigger_source;
 #endif

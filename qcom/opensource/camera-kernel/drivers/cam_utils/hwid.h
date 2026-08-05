@@ -1,0 +1,1 @@
+/run/media/parsa/Avalon/avalon/kernel/xiaomi/sm8450/drivers/misc/hwid/hwid.h

@@ -113,4 +113,6 @@ int32_t cam_sensor_driver_cmd(struct cam_sensor_ctrl_t *s_ctrl, void *arg);
  */
 void cam_sensor_shutdown(struct cam_sensor_ctrl_t *s_ctrl);
 
+struct completion *cam_sensor_get_i3c_completion(uint32_t index);
+
 #endif /* _CAM_SENSOR_CORE_H_ */

@@ -378,6 +378,8 @@ struct cam_req_mgr_device_info {
 	uint32_t                    trigger;
 	uint64_t                    mode_switch_req;
 	bool                        trigger_on;
+	bool                        is_shdr_master;
+	bool                        is_shdr;
 #if IS_ENABLED(CONFIG_ISPV3)
 	enum cam_req_mgr_trigger_source trigger_source;
 	int64_t                     latest_frame_id;

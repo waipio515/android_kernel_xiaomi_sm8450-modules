@@ -3014,6 +3014,7 @@ static int cam_tfe_mgr_config_hw(void *hw_mgr_priv,
 	struct cam_tfe_hw_mgr_ctx *ctx;
 	struct cam_isp_prepare_hw_update_data *hw_update_data;
 	bool is_cdm_hung = false;
+	bool cdm_hang_detect = false;
 	unsigned long rem_jiffies = 0;
 
 	if (!hw_mgr_priv || !config_hw_args) {

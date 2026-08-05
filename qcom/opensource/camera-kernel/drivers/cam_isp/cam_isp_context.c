@@ -3530,18 +3530,6 @@ static void get_notification_evt_params(uint32_t hw_error, uint32_t *fence_evt_c
 	*recovery_type = recovery_type_temp;
 }
 
-static bool __cam_isp_ctx_request_can_reapply(
-	struct cam_isp_ctx_req *req_isp)
-{
-	int i;
-
-	for (i = 0; i < req_isp->num_fence_map_out; i++)
-		if (req_isp->fence_map_out[i].sync_id == -1)
-			return false;
-
-	return true;
-}
-
 static int __cam_isp_ctx_validate_for_req_reapply_util(
 	struct cam_isp_context *ctx_isp)
 {
@@ -7409,10 +7397,8 @@ static int __cam_isp_ctx_get_dev_info(struct cam_context *ctx,
 	struct cam_req_mgr_device_info *dev_info)
 {
 	int rc = 0;
-#if IS_ENABLED(CONFIG_ISPV3)
 	struct cam_isp_context *ctx_isp =
 		(struct cam_isp_context *) ctx->ctx_priv;
-#endif
 
 	dev_info->dev_hdl = ctx->dev_hdl;
 	strlcpy(dev_info->name, CAM_ISP_DEV_NAME, sizeof(dev_info->name));
