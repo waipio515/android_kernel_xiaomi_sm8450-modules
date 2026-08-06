@@ -21,6 +21,38 @@
 #include <linux/ispv3_ioparam.h>
 #endif
 
+static int cam_sensor_notify_v4l2_error_event(
+	struct cam_sensor_ctrl_t *s_ctrl,
+	uint32_t error_type, uint32_t error_code)
+{
+	int                        rc = 0;
+	struct cam_req_mgr_message req_msg = {0};
+
+	req_msg.session_hdl = s_ctrl->bridge_intf.session_hdl;
+	req_msg.u.err_msg.device_hdl = s_ctrl->bridge_intf.device_hdl;
+	req_msg.u.err_msg.link_hdl = s_ctrl->bridge_intf.link_hdl;
+	req_msg.u.err_msg.error_type = error_type;
+	req_msg.u.err_msg.request_id = s_ctrl->last_applied_req;
+	req_msg.u.err_msg.resource_size = 0x0;
+	req_msg.u.err_msg.error_code = error_code;
+
+	CAM_DBG(CAM_SENSOR,
+		"v4l2 error event [type: %u code: %u] for req: %llu on %s",
+		error_type, error_code, s_ctrl->last_applied_req,
+		s_ctrl->sensor_name);
+
+	rc = cam_req_mgr_notify_message(&req_msg,
+		V4L_EVENT_CAM_REQ_MGR_ERROR,
+		V4L_EVENT_CAM_REQ_MGR_EVENT);
+	if (rc)
+		CAM_ERR(CAM_SENSOR,
+			"Notifying v4l2 error [type: %u code: %u] failed for req id:%llu on %s",
+			error_type, error_code, s_ctrl->last_applied_req,
+			s_ctrl->sensor_name);
+
+	return rc;
+}
+
 static int cam_sensor_update_req_mgr(
 	struct cam_sensor_ctrl_t *s_ctrl,
 	struct cam_packet *csl_packet)
