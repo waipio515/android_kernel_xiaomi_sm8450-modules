@@ -27,6 +27,7 @@
 
 enum cam_icp_hw_type {
 	CAM_ICP_DEV_A5,
+	CAM_ICP_DEV_LX7,
 	CAM_ICP_DEV_ICP_V1,
 	CAM_ICP_DEV_ICP_V2,
 	CAM_ICP_DEV_IPE,
