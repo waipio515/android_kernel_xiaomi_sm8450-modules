@@ -14,6 +14,7 @@
 #include "mi_sde_encoder.h"
 #include "mi_dsi_display.h"
 #include "mi_panel_id.h"
+#include <drm/drm_fixed.h>
 
 
 #define SDE_DEBUG_VIDENC(e, fmt, ...) SDE_DEBUG("enc%d intf%d " fmt, \
@@ -168,6 +169,7 @@ static void drm_mode_to_intf_timing_params(
 	 * for DSI, if compression is enabled, then divide the horizonal active
 	 * timing parameters by compression ratio.
 	 */
+	s64 width, comp_ratio;
 	if ((phys_enc->hw_intf->cap->type != INTF_DP) &&
 			((vid_enc->base.comp_type ==
 			MSM_DISPLAY_COMPRESSION_DSC) ||

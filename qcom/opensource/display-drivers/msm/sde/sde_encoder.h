@@ -258,6 +258,8 @@ struct sde_encoder_virt {
 	bool fps_switch_high_to_low;
 	bool update_clocks_on_complete_commit;
 	bool prepare_kickoff;
+	bool ctl_done_supported;
+	wait_queue_head_t vsync_event_wq;
 	bool ready_kickoff;
 };
 
